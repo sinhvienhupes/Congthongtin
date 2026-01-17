@@ -2,588 +2,403 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cổng Sinh viên HUPES | Modern UI</title>
-    <!-- Font hiện đại: Plus Jakarta Sans -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>HUPES Student App</title>
+    
+    <!-- Font Inter hiện đại -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* --- 1. DESIGN SYSTEM --- */
+        /* --- 1. BIẾN MÀU SẮC & CẤU HÌNH --- */
         :root {
-            /* Palette hiện đại */
-            --primary: #2563eb;         /* Xanh Royal sáng */
-            --primary-dark: #1e40af;
-            --secondary: #f59e0b;       /* Vàng năng động */
-            --bg-body: #f8fafc;         /* Xám xanh rất nhạt */
-            --surface: #ffffff;
+            /* Màu chủ đạo: Xanh Dương HUPES */
+            --primary: #0056b3;
+            --primary-bg: #eef6ff;
+            --accent: #ff9f1c; /* Cam điểm nhấn */
             
-            /* Text Colors */
-            --text-title: #0f172a;      /* Đen xanh đậm */
-            --text-body: #475569;       /* Xám trung tính */
-            --text-muted: #94a3b8;
+            /* Màu nền */
+            --bg-desktop: #f0f2f5; /* Màu nền xám nhẹ cho máy tính */
+            --bg-app: #ffffff;     /* Màu nền trắng cho khung ứng dụng */
             
-            /* Status Colors */
-            --success-bg: #dcfce7; --success-text: #166534;
-            --danger-bg: #fee2e2; --danger-text: #991b1b;
-            --warn-bg: #fef3c7; --warn-text: #92400e;
+            /* Text */
+            --text-dark: #1a1a1a;
+            --text-gray: #666666;
+            --text-light: #999999;
             
-            /* Effects */
-            --radius-lg: 20px;
-            --radius-md: 12px;
-            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            --glass: rgba(255, 255, 255, 0.85);
-            --glass-border: 1px solid rgba(255, 255, 255, 0.5);
+            /* Kích thước */
+            --app-width: 480px; /* Chiều rộng tối đa (chuẩn mobile) */
+            --radius: 16px;
+            --nav-height: 70px;
         }
 
-        * { box-sizing: border-box; }
-        
-        body { 
-            margin: 0; 
-            font-family: 'Plus Jakarta Sans', sans-serif; 
-            background-color: var(--bg-body); 
-            color: var(--text-body); 
-            line-height: 1.6;
-            display: flex; flex-direction: column; min-height: 100vh;
-        }
-        
-        a { text-decoration: none; color: inherit; transition: 0.3s ease; }
-        button { font-family: inherit; }
+        * { box-sizing: border-box; margin: 0; padding: 0; outline: none; -webkit-tap-highlight-color: transparent; }
 
-        /* --- 2. HEADER GLASSMORPHISM (CỐ ĐỊNH) --- */
-        .sticky-header {
-            position: sticky; top: 0; z-index: 1000;
-            background: var(--glass);
-            backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-            border-bottom: 1px solid rgba(226, 232, 240, 0.8);
-            box-shadow: var(--shadow-sm);
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-desktop);
+            color: var(--text-dark);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center; /* Căn giữa trên Desktop */
         }
 
-        .header-top {
-            max-width: 1200px; margin: 0 auto; padding: 12px 20px;
-            display: flex; justify-content: space-between; align-items: center;
+        /* --- 2. KHUNG ỨNG DỤNG (APP CONTAINER) --- */
+        #app-frame {
+            width: 100%;
+            max-width: var(--app-width); /* Giới hạn chiều rộng */
+            background-color: var(--bg-app);
+            min-height: 100vh;
+            position: relative;
+            box-shadow: 0 0 20px rgba(0,0,0,0.05); /* Bóng đổ nhẹ trên Desktop */
+            display: flex; flex-direction: column;
+            overflow: hidden;
         }
 
-        .brand-group { display: flex; align-items: center; gap: 16px; }
-        .logo-img { height: 58px; width: auto; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.05)); }
-        
-        .brand-info h1 { margin: 0; font-size: 1.25rem; font-weight: 800; color: var(--primary-dark); letter-spacing: -0.5px; line-height: 1.2; }
-        .brand-info p { margin: 0; font-size: 0.8rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
-
-        /* Nút Quick Link Header */
-        .header-actions { display: flex; gap: 12px; }
-        .btn-glass {
-            padding: 8px 16px; border-radius: 10px; font-size: 0.85rem; font-weight: 600;
-            background: rgba(255,255,255,0.5); border: 1px solid rgba(0,0,0,0.05);
-            display: flex; align-items: center; gap: 8px; color: var(--text-title);
-        }
-        .btn-glass:hover { background: white; transform: translateY(-2px); box-shadow: var(--shadow-md); color: var(--primary); }
-        .btn-accent { background: var(--primary); color: white; border: none; }
-        .btn-accent:hover { background: var(--primary-dark); color: white; transform: translateY(-2px); box-shadow: var(--shadow-md); }
-
-        /* --- 3. MODERN NAV TABS --- */
-        .nav-wrapper { border-top: 1px solid rgba(0,0,0,0.03); }
-        .nav-container {
-            max-width: 1200px; margin: 0 auto; padding: 0 20px;
-            display: flex; justify-content: center; gap: 8px;
-        }
-        
-        .nav-tab {
-            background: none; border: none; cursor: pointer;
-            padding: 16px 20px; color: var(--text-muted); font-weight: 600; font-size: 0.95rem;
-            position: relative; transition: all 0.3s;
-        }
-        .nav-tab i { margin-right: 8px; font-size: 1.1rem; }
-        
-        /* Hiệu ứng gạch chân chạy mượt */
-        .nav-tab::after {
-            content: ''; position: absolute; bottom: 0; left: 50%; width: 0; height: 3px;
-            background: var(--primary); border-radius: 3px 3px 0 0;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); transform: translateX(-50%);
-        }
-        .nav-tab:hover { color: var(--primary); background: linear-gradient(to top, rgba(37, 99, 235, 0.05), transparent); }
-        .nav-tab.active { color: var(--primary); }
-        .nav-tab.active::after { width: 100%; }
-
-        /* --- 4. MAIN CONTENT AREA --- */
-        .main-layout { max-width: 1200px; margin: 30px auto; padding: 0 20px; flex: 1; width: 100%; }
-        
-        /* Animation chuyển tab */
-        .tab-panel { display: none; animation: slideUpFade 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
-        .tab-panel.active { display: block; }
-        @keyframes slideUpFade { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* --- UI COMPONENTS --- */
-        
-        /* Hero Card (Gradient Mesh) */
-        .hero-card {
-            background: linear-gradient(120deg, #2563eb, #3b82f6, #60a5fa);
-            border-radius: var(--radius-lg); padding: 40px; color: white;
-            display: flex; justify-content: space-between; align-items: center;
-            box-shadow: 0 20px 25px -5px rgba(37, 99, 235, 0.3);
-            margin-bottom: 30px; position: relative; overflow: hidden;
-        }
-        /* Họa tiết trang trí nền */
-        .hero-card::before {
-            content: ''; position: absolute; top: -50%; left: -10%; width: 300px; height: 300px;
-            background: rgba(255,255,255,0.1); border-radius: 50%; filter: blur(40px);
-        }
-        
-        .hero-info h2 { font-size: 1.8rem; font-weight: 800; margin: 0 0 8px 0; letter-spacing: -0.5px; }
-        .hero-info p { opacity: 0.9; margin: 0; font-size: 1rem; }
-        
-        .hero-stat {
-            background: rgba(255,255,255,0.15); backdrop-filter: blur(10px);
-            padding: 15px 25px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.2);
-            text-align: center; min-width: 140px;
-        }
-        .hero-stat .val { font-size: 2rem; font-weight: 800; line-height: 1; display: block; }
-        .hero-stat .lbl { font-size: 0.85rem; font-weight: 600; opacity: 0.9; margin-top: 5px; display: block; }
-
-        /* Cards & Grid */
-        .grid-dashboard { display: grid; grid-template-columns: repeat(12, 1fr); gap: 24px; }
-        .col-4 { grid-column: span 4; }
-        .col-8 { grid-column: span 8; }
-        
-        .card {
-            background: var(--surface); border-radius: var(--radius-lg); padding: 24px;
-            box-shadow: var(--shadow-md); border: 1px solid rgba(241, 245, 249, 1);
-            transition: 0.3s; height: 100%;
-        }
-        .card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
-        
-        .card-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .card-title { font-size: 1.1rem; font-weight: 700; color: var(--text-title); display: flex; align-items: center; gap: 10px; }
-        .icon-box {
-            width: 36px; height: 36px; border-radius: 10px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1rem;
-        }
-        .icon-blue { background: #eff6ff; color: var(--primary); }
-        .icon-orange { background: #fff7ed; color: var(--secondary); }
-
-        /* Sub-navigation (Pills) */
-        .sub-nav {
-            background: white; padding: 6px; border-radius: 16px; display: inline-flex; gap: 5px;
-            box-shadow: var(--shadow-sm); margin-bottom: 25px; border: 1px solid #f1f5f9;
-        }
-        .pill-btn {
-            border: none; background: transparent; padding: 10px 24px;
-            border-radius: 12px; font-weight: 600; color: var(--text-muted); cursor: pointer;
-            transition: 0.3s; font-size: 0.9rem;
-        }
-        .pill-btn:hover { color: var(--primary); background: #f8fafc; }
-        .pill-btn.active { background: var(--primary); color: white; shadow: var(--shadow-md); }
-
-        /* Modern List Items (Thay thế bảng cũ) */
-        .list-group { display: flex; flex-direction: column; gap: 12px; }
-        .list-item {
+        /* --- 3. HEADER --- */
+        .header {
+            background: white;
+            padding: 15px 20px;
+            position: sticky; top: 0; z-index: 100;
             display: flex; align-items: center; justify-content: space-between;
-            background: #f8fafc; padding: 16px; border-radius: 16px;
-            border: 1px solid transparent; transition: 0.2s;
+            border-bottom: 1px solid #f0f0f0;
         }
-        .list-item:hover { background: white; border-color: #e2e8f0; box-shadow: var(--shadow-md); }
-        
-        .item-left { display: flex; align-items: center; gap: 15px; }
-        .item-date { 
-            background: white; padding: 8px 12px; border-radius: 10px; text-align: center; 
-            box-shadow: var(--shadow-sm); border: 1px solid #f1f5f9; min-width: 60px;
-        }
-        .item-date b { display: block; color: var(--primary); font-size: 1.1rem; line-height: 1; }
-        .item-date span { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); }
-        
-        .item-info h4 { margin: 0 0 4px 0; font-size: 1rem; font-weight: 700; color: var(--text-title); }
-        .item-info p { margin: 0; font-size: 0.85rem; color: var(--text-body); }
-        
-        .status-chip {
-            padding: 6px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
-        }
-        .status-pass { background: var(--success-bg); color: var(--success-text); }
-        .status-fail { background: var(--danger-bg); color: var(--danger-text); }
-        .status-wait { background: var(--warn-bg); color: var(--warn-text); }
+        .brand { display: flex; align-items: center; gap: 12px; }
+        .brand img { height: 40px; width: auto; object-fit: contain; }
+        .brand-text h1 { font-size: 1.1rem; font-weight: 800; color: var(--primary); line-height: 1.2; margin: 0; }
+        .brand-text p { font-size: 0.75rem; color: var(--text-gray); font-weight: 600; text-transform: uppercase; margin: 0; }
 
-        /* Footer */
-        footer {
-            text-align: center; padding: 40px; color: var(--text-muted); font-size: 0.9rem;
-            border-top: 1px solid #e2e8f0; margin-top: auto; background: white;
+        /* Nút thông báo (giả lập) */
+        .btn-bell {
+            width: 40px; height: 40px; border-radius: 50%; background: var(--primary-bg);
+            color: var(--primary); display: flex; align-items: center; justify-content: center;
+            font-size: 1.2rem; cursor: pointer; transition: 0.2s;
+        }
+        .btn-bell:active { transform: scale(0.9); }
+
+        /* --- 4. NỘI DUNG CHÍNH (SCROLLABLE) --- */
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            padding-bottom: calc(var(--nav-height) + 20px); /* Chừa chỗ cho menu đáy */
+            overflow-y: auto;
         }
 
-        /* Responsive */
-        @media (max-width: 900px) {
-            .col-4, .col-8 { grid-column: span 12; }
-            .hero-card { flex-direction: column; text-align: center; gap: 20px; }
-            .header-top { flex-direction: column; gap: 15px; align-items: flex-start; }
-            .header-actions { width: 100%; justify-content: space-between; }
-            .nav-container { justify-content: flex-start; overflow-x: auto; padding-bottom: 5px; }
-            .nav-tab { white-space: nowrap; }
-            .sub-nav { width: 100%; overflow-x: auto; white-space: nowrap; display: flex; }
+        /* Tiêu đề mục */
+        .section-header {
+            font-size: 1rem; font-weight: 700; margin: 25px 0 15px 0;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .section-header i { color: var(--accent); }
+
+        /* --- 5. COMPONENT: GPA CARD (Thẻ điểm) --- */
+        .gpa-card {
+            background: linear-gradient(135deg, #0056b3 0%, #004494 100%);
+            border-radius: 20px; padding: 25px; color: white;
+            box-shadow: 0 10px 20px rgba(0, 86, 179, 0.3);
+            position: relative; overflow: hidden; margin-top: 10px;
+        }
+        .gpa-card::after {
+            content: ''; position: absolute; right: -30px; top: -30px;
+            width: 150px; height: 150px; background: rgba(255,255,255,0.1);
+            border-radius: 50%; pointer-events: none;
+        }
+        
+        .gpa-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
+        .gpa-label { font-size: 0.9rem; opacity: 0.9; font-weight: 500; }
+        .gpa-rank { 
+            background: rgba(255,255,255,0.2); padding: 5px 12px; border-radius: 20px;
+            font-size: 0.8rem; font-weight: 700; backdrop-filter: blur(5px);
+        }
+
+        .gpa-value { font-size: 3rem; font-weight: 800; line-height: 1; }
+        .gpa-sub { font-size: 0.85rem; opacity: 0.8; margin-top: 5px; }
+
+        /* --- 6. COMPONENT: QUICK LINKS (Lưới 2 cột) --- */
+        .grid-links { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .link-item {
+            background: white; border: 1px solid #f0f0f0; border-radius: 16px;
+            padding: 15px; display: flex; flex-direction: column; align-items: center;
+            text-align: center; gap: 10px; text-decoration: none; color: inherit;
+            transition: 0.2s; box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+        }
+        .link-item:active { transform: scale(0.97); background: #fafafa; }
+        .link-icon {
+            width: 50px; height: 50px; border-radius: 14px;
+            display: flex; align-items: center; justify-content: center; font-size: 1.5rem;
+        }
+        .icon-blue { background: #eef6ff; color: var(--primary); }
+        .icon-orange { background: #fff8e6; color: var(--accent); }
+        .link-text { font-weight: 600; font-size: 0.9rem; }
+
+        /* --- 7. COMPONENT: INPUT FORM (Danh sách môn) --- */
+        .calc-container { background: white; border-radius: 16px; border: 1px solid #f0f0f0; padding: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.03); }
+        
+        .row-input { display: flex; gap: 10px; margin-bottom: 12px; align-items: center; }
+        .input-text { 
+            flex: 1; padding: 12px; border: 1px solid #e0e0e0; border-radius: 10px;
+            font-size: 0.9rem; background: #fafafa;
+        }
+        .input-num { 
+            width: 55px; padding: 12px 5px; text-align: center; border: 1px solid #e0e0e0;
+            border-radius: 10px; font-weight: 600; font-size: 0.9rem;
+        }
+        .input-select {
+            flex: 1.2; padding: 12px 5px; border: 1px solid #e0e0e0; border-radius: 10px;
+            font-size: 0.9rem; background: white;
+        }
+        .btn-remove {
+            width: 35px; height: 35px; border: none; background: #fff0f0; color: #ff4d4d;
+            border-radius: 8px; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center;
+        }
+
+        .action-btns { display: flex; gap: 10px; margin-top: 20px; }
+        .btn-main {
+            flex: 1; padding: 14px; border: none; border-radius: 12px; font-weight: 700;
+            font-size: 0.95rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
+        }
+        .btn-add { background: var(--primary-bg); color: var(--primary); }
+        .btn-calc { background: var(--primary); color: white; box-shadow: 0 4px 10px rgba(0, 86, 179, 0.2); }
+        .btn-reset { width: 50px; background: #f5f5f5; color: var(--text-gray); }
+
+        /* --- 8. BOTTOM NAVIGATION (MENU ĐÁY) --- */
+        .bottom-nav {
+            position: absolute; bottom: 0; left: 0; width: 100%;
+            height: var(--nav-height); background: white;
+            border-top: 1px solid #f0f0f0;
+            display: flex; justify-content: space-around; align-items: center;
+            z-index: 99;
+        }
+        .nav-btn {
+            background: transparent; border: none; cursor: pointer;
+            display: flex; flex-direction: column; align-items: center; gap: 4px;
+            color: var(--text-light); width: 100%; padding: 10px 0;
+        }
+        .nav-btn i { font-size: 1.4rem; transition: 0.2s; }
+        .nav-btn span { font-size: 0.7rem; font-weight: 600; }
+        
+        .nav-btn.active { color: var(--primary); }
+        .nav-btn.active i { transform: translateY(-3px); }
+
+        /* --- TABS LOGIC --- */
+        .view-panel { display: none; animation: fadeIn 0.3s; }
+        .view-panel.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* --- FACEBOOK WRAPPER --- */
+        .fb-wrapper {
+            background: white; border-radius: 16px; overflow: hidden;
+            border: 1px solid #f0f0f0; min-height: 80vh;
         }
     </style>
 </head>
 <body>
 
-    <!-- STICKY HEADER GLASS -->
-    <header class="sticky-header">
-        <div class="header-top">
-            <div class="brand-group">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpgvJazmvDbTqBokssetod1HY84lMWh3VDiRxrmNsU4A&s" alt="HUPES" class="logo-img">
-                <div class="brand-info">
+    <!-- KHUNG ỨNG DỤNG (GIỚI HẠN CHIỀU RỘNG TRÊN PC) -->
+    <div id="app-frame">
+        
+        <!-- HEADER -->
+        <header class="header">
+            <div class="brand">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpgvJazmvDbTqBokssetod1HY84lMWh3VDiRxrmNsU4A&s" alt="HUPES">
+                <div class="brand-text">
                     <h1>HUPES</h1>
-                    <p>Cổng thông tin Sinh viên</p>
+                    <p>Student Portal</p>
                 </div>
             </div>
-            
-            <div class="header-actions">
-                <a href="https://hupes.edu.vn/" target="_blank" class="btn-glass">
-                    <i class="fas fa-globe"></i> Website
-                </a>
-                <a href="https://congthongtin.hupes.edu.vn/" target="_blank" class="btn-glass btn-accent">
-                    <i class="fas fa-graduation-cap"></i> EduSoft
-                </a>
+            <div class="btn-bell" onclick="alert('Hiện chưa có thông báo mới!')">
+                <i class="fas fa-bell"></i>
             </div>
-        </div>
+        </header>
 
-        <nav class="nav-wrapper">
-            <div class="nav-container">
-                <button class="nav-tab active" onclick="switchTab(event, 'dashboard')"><i class="fas fa-grid-2"></i> Tổng quan</button>
-                <button class="nav-tab" onclick="switchTab(event, 'learning')"><i class="fas fa-book-open"></i> Góc học tập</button>
-                <button class="nav-tab" onclick="switchTab(event, 'news')"><i class="fas fa-bell"></i> Thông báo</button>
-                <button class="nav-tab" onclick="switchTab(event, 'support')"><i class="fas fa-headset"></i> Hỗ trợ</button>
+        <!-- NỘI DUNG CHÍNH -->
+        <main class="main-content">
+            
+            <!-- TAB 1: TIỆN ÍCH (HOME) -->
+            <div id="tab-home" class="view-panel active">
+                
+                <!-- GPA Card -->
+                <div class="gpa-card">
+                    <div class="gpa-top">
+                        <span class="gpa-label">Dự tính Học kỳ này</span>
+                        <span class="gpa-rank" id="rank-badge">Chưa tính</span>
+                    </div>
+                    <div class="gpa-value" id="gpa-display">0.00</div>
+                    <div class="gpa-sub">Tổng tín chỉ: <span id="credit-display">0</span></div>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="section-header">
+                    <i class="fas fa-rocket"></i> Truy cập nhanh
+                </div>
+                <div class="grid-links">
+                    <a href="https://congthongtin.hupes.edu.vn/" target="_blank" class="link-item">
+                        <div class="link-icon icon-blue"><i class="fas fa-graduation-cap"></i></div>
+                        <span class="link-text">Cổng EduSoft</span>
+                    </a>
+                    <a href="https://hupes.edu.vn/" target="_blank" class="link-item">
+                        <div class="link-icon icon-orange"><i class="fas fa-globe"></i></div>
+                        <span class="link-text">Web Trường</span>
+                    </a>
+                </div>
+
+                <!-- Calculator -->
+                <div class="section-header">
+                    <i class="fas fa-calculator"></i> Tính điểm
+                </div>
+                <div class="calc-container">
+                    <div id="input-list">
+                        <!-- JS sẽ thêm dòng vào đây -->
+                    </div>
+
+                    <div class="action-btns">
+                        <button class="btn-main btn-reset" onclick="resetAll()"><i class="fas fa-trash"></i></button>
+                        <button class="btn-main btn-add" onclick="addRow()"><i class="fas fa-plus"></i> Thêm</button>
+                        <button class="btn-main btn-calc" onclick="calculate()"><i class="fas fa-check"></i> Tính</button>
+                    </div>
+                </div>
             </div>
+
+            <!-- TAB 2: TIN TỨC (FACEBOOK) -->
+            <div id="tab-news" class="view-panel">
+                <div class="section-header">
+                    <i class="fab fa-facebook" style="color: #1877f2;"></i> Tin từ Fanpage
+                </div>
+                <div class="fb-wrapper">
+                    <!-- FB Plugin -->
+                    <div class="fb-page" 
+                         data-href="https://www.facebook.com/HUPES" 
+                         data-tabs="timeline" 
+                         data-width="500" 
+                         data-height="800" 
+                         data-small-header="false" 
+                         data-adapt-container-width="true" 
+                         data-hide-cover="false" 
+                         data-show-facepile="false">
+                         <blockquote cite="https://www.facebook.com/HUPES" class="fb-xfbml-parse-ignore">
+                            <a href="https://www.facebook.com/HUPES">Facebook HUPES</a>
+                         </blockquote>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- MENU ĐÁY -->
+        <nav class="bottom-nav">
+            <button class="nav-btn active" onclick="switchTab('tab-home', this)">
+                <i class="fas fa-th-large"></i>
+                <span>Tiện ích</span>
+            </button>
+            <button class="nav-btn" onclick="switchTab('tab-news', this)">
+                <i class="fas fa-newspaper"></i>
+                <span>Bảng tin</span>
+            </button>
         </nav>
-    </header>
 
-    <!-- MAIN CONTENT -->
-    <main class="main-layout">
+    </div> <!-- End App Frame -->
 
-        <!-- TAB 1: DASHBOARD -->
-        <div id="dashboard" class="tab-panel active">
-            <!-- Hero Banner -->
-            <div class="hero-card">
-                <div class="hero-info">
-                    <h2>Xin chào, Nguyễn Văn A 👋</h2>
-                    <p>K56 - Khoa Giáo dục Thể chất | MSSV: 2201045</p>
-                    <div style="margin-top: 20px;">
-                        <button onclick="switchTab(event, 'learning')" style="background: white; color: var(--primary); border: none; padding: 10px 24px; border-radius: 30px; font-weight: 700; cursor: pointer; transition: 0.3s;">
-                            Xem lịch học hôm nay <i class="fas fa-arrow-right"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="hero-stat">
-                    <span class="val">3.42</span>
-                    <span class="lbl">GPA Tích lũy</span>
-                </div>
-            </div>
+    <!-- FACEBOOK SDK -->
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v18.0" nonce="hupesStudent"></script>
 
-            <!-- Bento Grid Layout -->
-            <div class="grid-dashboard">
-                <!-- Cột trái: Tiện ích -->
-                <div class="col-8">
-                    <div class="card">
-                        <div class="card-head">
-                            <span class="card-title"><div class="icon-box icon-blue"><i class="fas fa-rocket"></i></div> Truy cập nhanh</span>
-                        </div>
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
-                            <a href="#" onclick="switchTab(event, 'learning'); openSub('sub-schedule')" class="list-item" style="background: #f1f5f9;">
-                                <div class="item-left">
-                                    <div class="icon-box icon-blue" style="background: white;"><i class="fas fa-calendar"></i></div>
-                                    <div class="item-info">
-                                        <h4>Thời khóa biểu</h4>
-                                        <p>Tuần này</p>
-                                    </div>
-                                </div>
-                            </a>
-                            <a href="#" onclick="switchTab(event, 'learning'); openSub('sub-grades')" class="list-item" style="background: #f1f5f9;">
-                                <div class="item-left">
-                                    <div class="icon-box icon-orange" style="background: white;"><i class="fas fa-star"></i></div>
-                                    <div class="item-info">
-                                        <h4>Kết quả học tập</h4>
-                                        <p>Tra cứu điểm</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Cột phải: Thông báo -->
-                <div class="col-4">
-                    <div class="card">
-                        <div class="card-head">
-                            <span class="card-title"><div class="icon-box icon-orange"><i class="fas fa-bullhorn"></i></div> Tin mới</span>
-                            <a href="#" onclick="switchTab(event, 'news')" style="font-size: 0.85rem; color: var(--primary); font-weight: 600;">Xem tất cả</a>
-                        </div>
-                        
-                        <div class="list-group">
-                            <div class="list-item" style="padding: 12px; border-radius: 12px;">
-                                <div class="item-left">
-                                    <div class="item-date" style="min-width: 50px; padding: 5px;"><b>16</b><span>TH1</span></div>
-                                    <div class="item-info">
-                                        <h4 style="font-size: 0.9rem;">Lịch thi K56</h4>
-                                        <p style="font-size: 0.8rem;">Đã có lịch thi...</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="list-item" style="padding: 12px; border-radius: 12px;">
-                                <div class="item-left">
-                                    <div class="item-date" style="min-width: 50px; padding: 5px;"><b>14</b><span>TH1</span></div>
-                                    <div class="item-info">
-                                        <h4 style="font-size: 0.9rem;">Đóng học phí</h4>
-                                        <p style="font-size: 0.8rem;">Hạn chót 30/1...</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- TAB 2: GÓC HỌC TẬP -->
-        <div id="learning" class="tab-panel">
-            <h2 style="margin-bottom: 20px; color: var(--text-title);">Góc học tập</h2>
-            
-            <!-- Sub Navigation Pills -->
-            <div class="sub-nav">
-                <button class="pill-btn active" onclick="openSub('sub-schedule', this)">Thời khóa biểu</button>
-                <button class="pill-btn" onclick="openSub('sub-grades', this)">Bảng điểm</button>
-                <button class="pill-btn" onclick="openSub('sub-exam', this)">Lịch thi</button>
-                <button class="pill-btn" onclick="openSub('sub-finance', this)">Tài chính</button>
-            </div>
-
-            <!-- Sub Tab: TKB -->
-            <div id="sub-schedule" class="sub-content">
-                <div class="card">
-                    <div class="card-head">
-                        <span class="card-title"><i class="fas fa-calendar-week" style="color: var(--primary);"></i> Tuần 24 (16/01 - 22/01)</span>
-                        <span class="status-chip status-wait">Học kỳ 2</span>
-                    </div>
-                    
-                    <div class="list-group">
-                        <!-- Tiết học 1 -->
-                        <div class="list-item">
-                            <div class="item-left">
-                                <div class="item-date" style="background: var(--primary); border: none;">
-                                    <b style="color: white;">T2</b>
-                                    <span style="color: rgba(255,255,255,0.8);">Sáng</span>
-                                </div>
-                                <div class="item-info">
-                                    <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">07:00 - 10:30 (Tiết 1-4)</span>
-                                    <h4 style="font-size: 1.1rem; margin-top: 4px;">Điền kinh 2 (Thực hành)</h4>
-                                    <p><i class="fas fa-map-pin" style="color: var(--secondary); margin-right: 5px;"></i> Sân vận động trung tâm</p>
-                                </div>
-                            </div>
-                            <div style="text-align: right; display: none; display: md-block;">
-                                <div style="font-size: 0.85rem; font-weight: 600;">GV: Lê Thị Mai</div>
-                            </div>
-                        </div>
-
-                        <!-- Tiết học 2 -->
-                        <div class="list-item">
-                            <div class="item-left">
-                                <div class="item-date">
-                                    <b style="color: var(--text-title);">T3</b>
-                                    <span>Chiều</span>
-                                </div>
-                                <div class="item-info">
-                                    <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">13:00 - 15:30 (Tiết 7-9)</span>
-                                    <h4 style="font-size: 1.1rem; margin-top: 4px;">Tiếng Anh chuyên ngành</h4>
-                                    <p><i class="fas fa-map-pin" style="color: var(--secondary); margin-right: 5px;"></i> P.302 - Nhà A</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Sub Tab: Điểm -->
-            <div id="sub-grades" class="sub-content" style="display: none;">
-                <div class="grid-dashboard">
-                    <!-- Tổng kết -->
-                    <div class="col-4">
-                        <div class="card" style="background: #1e293b; color: white; border: none;">
-                            <h3 style="margin-top: 0; color: #94a3b8; font-size: 0.9rem; text-transform: uppercase;">GPA Hệ 4</h3>
-                            <div style="font-size: 3.5rem; font-weight: 800; line-height: 1; margin-bottom: 10px; color: #38bdf8;">3.25</div>
-                            <div style="font-size: 0.9rem;">Xếp loại: <strong style="color: #4ade80;">Giỏi</strong></div>
-                            <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1);">
-                                <div style="display: flex; justify-content: space-between;">
-                                    <span>Tín chỉ:</span>
-                                    <strong>85 / 130</strong>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Danh sách môn -->
-                    <div class="col-8">
-                        <div class="card">
-                            <div class="list-group">
-                                <div class="list-item">
-                                    <div class="item-left">
-                                        <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--success-bg); color: var(--success-text); display: flex; align-items: center; justify-content: center; font-weight: 800;">A</div>
-                                        <div class="item-info">
-                                            <h4>Bóng chuyền 1</h4>
-                                            <p>2 Tín chỉ</p>
-                                        </div>
-                                    </div>
-                                    <span class="status-chip status-pass">9.0 (Đạt)</span>
-                                </div>
-
-                                <div class="list-item">
-                                    <div class="item-left">
-                                        <div style="width: 40px; height: 40px; border-radius: 50%; background: #eff6ff; color: var(--primary); display: flex; align-items: center; justify-content: center; font-weight: 800;">B</div>
-                                        <div class="item-info">
-                                            <h4>Kinh tế chính trị</h4>
-                                            <p>3 Tín chỉ</p>
-                                        </div>
-                                    </div>
-                                    <span class="status-chip status-pass">7.5 (Đạt)</span>
-                                </div>
-
-                                <div class="list-item">
-                                    <div class="item-left">
-                                        <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--danger-bg); color: var(--danger-text); display: flex; align-items: center; justify-content: center; font-weight: 800;">F</div>
-                                        <div class="item-info">
-                                            <h4>Tiếng Anh cơ bản 1</h4>
-                                            <p>3 Tín chỉ</p>
-                                        </div>
-                                    </div>
-                                    <span class="status-chip status-fail">Học lại</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Sub Tab: Lịch thi -->
-            <div id="sub-exam" class="sub-content" style="display: none;">
-                <div class="card">
-                    <div class="list-group">
-                        <div class="list-item">
-                            <div class="item-left">
-                                <div class="item-date"><b>25</b><span>TH1</span></div>
-                                <div class="item-info">
-                                    <h4>Tâm lý học Thể thao</h4>
-                                    <p>08:00 - P.402 Nhà A</p>
-                                </div>
-                            </div>
-                            <span class="status-chip status-wait">Sắp thi</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Sub Tab: Tài chính -->
-             <div id="sub-finance" class="sub-content" style="display: none;">
-                <div class="card" style="border: 2px dashed var(--danger-bg);">
-                    <div class="card-head">
-                        <span class="card-title" style="color: var(--danger-text);">Học phí Kỳ 2</span>
-                        <span class="status-chip status-fail">Chưa thanh toán</span>
-                    </div>
-                    <div style="font-size: 2rem; font-weight: 800; margin-bottom: 20px;">6.300.000 đ</div>
-                    <div style="background: #f8fafc; padding: 20px; border-radius: 12px; font-size: 0.9rem;">
-                         <p style="margin-bottom: 5px;"><strong>Ngân hàng:</strong> Agribank</p>
-                         <p style="margin-bottom: 5px;"><strong>STK:</strong> 123456789</p>
-                         <p style="margin: 0;"><strong>Nội dung:</strong> 2201045 Nguyen Van A HP Ky 2</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- TAB 3: THÔNG BÁO -->
-        <div id="news" class="tab-panel">
-            <h2 style="margin-bottom: 20px;">Tin tức & Sự kiện</h2>
-            <div class="grid-dashboard">
-                <div class="col-4">
-                    <div class="card">
-                        <img src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" style="width: 100%; border-radius: 12px; margin-bottom: 15px; height: 180px; object-fit: cover;">
-                        <span class="status-chip status-wait" style="margin-bottom: 10px; display: inline-block;">Đào tạo</span>
-                        <h4>Lễ trao bằng tốt nghiệp 2026</h4>
-                        <p style="font-size: 0.9rem; color: var(--text-body);">Thông báo kế hoạch tổ chức và danh sách...</p>
-                    </div>
-                </div>
-                <div class="col-4">
-                    <div class="card">
-                        <img src="https://images.unsplash.com/photo-1576267423048-15c0040fec78?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" style="width: 100%; border-radius: 12px; margin-bottom: 15px; height: 180px; object-fit: cover;">
-                        <span class="status-chip status-pass" style="margin-bottom: 10px; display: inline-block;">Thể thao</span>
-                        <h4>Hội thao Sinh viên HUPES</h4>
-                        <p style="font-size: 0.9rem; color: var(--text-body);">Khởi tranh giải bóng đá và điền kinh...</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- TAB 4: HỖ TRỢ -->
-        <div id="support" class="tab-panel">
-            <div class="card">
-                <div class="list-group">
-                    <div class="list-item">
-                        <div class="item-left">
-                            <div class="icon-box icon-blue"><i class="fas fa-phone"></i></div>
-                            <div class="item-info">
-                                <h4>Phòng Đào tạo</h4>
-                                <p>(024) 33866 058 - Hỗ trợ đăng ký tín chỉ</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="list-item">
-                        <div class="item-left">
-                            <div class="icon-box icon-orange"><i class="fas fa-envelope"></i></div>
-                            <div class="item-info">
-                                <h4>Email hỗ trợ</h4>
-                                <p>hupes@hupes.edu.vn</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </main>
-
-    <!-- FOOTER -->
-    <footer>
-        <p>&copy; 2026 Trường Đại học Sư phạm Thể dục Thể thao Hà Nội</p>
-        <p>Phiên bản Portal 2.0 - Designed for Students</p>
-    </footer>
-
-    <!-- JAVASCRIPT -->
+    <!-- SCRIPT -->
     <script>
-        // Chuyển Tab Chính
-        function switchTab(evt, tabId) {
-            document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-            
+        // Cấu hình điểm
+        const grades = [
+            { txt: 'A (8.5+)', val: 4.0 }, { txt: 'B+ (8.0+)', val: 3.5 },
+            { txt: 'B (7.0+)', val: 3.0 }, { txt: 'C+ (6.5+)', val: 2.5 },
+            { txt: 'C (5.5+)', val: 2.0 }, { txt: 'D+ (5.0+)', val: 1.5 },
+            { txt: 'D (4.0+)', val: 1.0 }, { txt: 'F (<4.0)', val: 0.0 }
+        ];
+
+        // Khởi tạo
+        window.onload = function() {
+            loadData();
+            if(document.querySelectorAll('.row-input').length === 0) {
+                addRow(); addRow(); addRow();
+            }
+        };
+
+        // Chuyển Tab
+        function switchTab(tabId, btn) {
+            document.querySelectorAll('.view-panel').forEach(p => p.classList.remove('active'));
             document.getElementById(tabId).classList.add('active');
             
-            // Highlight nav item
-            if(evt && evt.currentTarget.classList.contains('nav-tab')) {
-                evt.currentTarget.classList.add('active');
-            } else {
-                // Nếu gọi từ link khác, tìm nav item tương ứng để highlight
-                const navBtn = document.querySelector(`.nav-tab[onclick*="'${tabId}'"]`);
-                if(navBtn) navBtn.classList.add('active');
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        }
+
+        // Thêm dòng
+        function addRow(name = "", cred = 2, grd = 4.0) {
+            const container = document.getElementById('input-list');
+            const div = document.createElement('div');
+            div.className = 'row-input';
+            
+            const options = grades.map(g => `<option value="${g.val}" ${g.val == grd ? 'selected' : ''}>${g.txt}</option>`).join('');
+
+            div.innerHTML = `
+                <input type="text" class="input-text" placeholder="Tên môn..." value="${name}">
+                <input type="number" class="input-num" value="${cred}" min="1" max="15">
+                <select class="input-select">${options}</select>
+                <button class="btn-remove" onclick="removeRow(this)"><i class="fas fa-times"></i></button>
+            `;
+            container.appendChild(div);
+        }
+
+        function removeRow(btn) {
+            btn.closest('.row-input').remove();
+            calculate();
+        }
+
+        function resetAll() {
+            if(confirm('Xóa hết dữ liệu đã nhập?')) {
+                document.getElementById('input-list').innerHTML = '';
+                localStorage.removeItem('hupes_app_data');
+                addRow(); addRow(); addRow();
+                updateUI(0, 0, "Chưa tính");
             }
         }
 
-        // Chuyển Sub Tab (Pills)
-        function openSub(subId, btn) {
-            // Ẩn hết nội dung sub
-            document.querySelectorAll('#learning .sub-content').forEach(el => el.style.display = 'none');
-            // Bỏ active nút pills
-            document.querySelectorAll('.pill-btn').forEach(el => el.classList.remove('active'));
+        // Tính toán
+        function calculate() {
+            const rows = document.querySelectorAll('.row-input');
+            let totalCr = 0, totalPt = 0, data = [];
+
+            rows.forEach(row => {
+                const name = row.querySelector('.input-text').value;
+                const cred = parseFloat(row.querySelector('.input-num').value) || 0;
+                const grd = parseFloat(row.querySelector('.input-select').value);
+                
+                data.push({ name, cred, grd });
+                if(cred > 0) { totalCr += cred; totalPt += (cred * grd); }
+            });
+
+            localStorage.setItem('hupes_app_data', JSON.stringify(data));
+
+            if(totalCr === 0) { updateUI(0, 0, "Chưa tính"); return; }
             
-            // Hiện nội dung chọn
-            document.getElementById(subId).style.display = 'block';
+            const gpa = (totalPt / totalCr).toFixed(2);
+            let rank = gpa >= 3.6 ? "Xuất sắc" : gpa >= 3.2 ? "Giỏi" : gpa >= 2.5 ? "Khá" : gpa >= 2.0 ? "Trung bình" : "Yếu";
             
-            if(btn) {
-                btn.classList.add('active');
-            } else {
-                 const pill = document.querySelector(`.pill-btn[onclick*="'${subId}'"]`);
-                 if(pill) pill.classList.add('active');
+            updateUI(totalCr, gpa, rank);
+        }
+
+        function updateUI(cr, gpa, rank) {
+            document.getElementById('credit-display').innerText = cr;
+            document.getElementById('gpa-display').innerText = gpa;
+            document.getElementById('rank-badge').innerText = rank;
+        }
+
+        function loadData() {
+            const data = localStorage.getItem('hupes_app_data');
+            if(data) {
+                const parsed = JSON.parse(data);
+                if(parsed.length > 0) {
+                    document.getElementById('input-list').innerHTML = '';
+                    parsed.forEach(i => addRow(i.name, i.cred, i.grd));
+                    calculate();
+                }
             }
         }
     </script>
