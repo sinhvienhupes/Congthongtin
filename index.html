@@ -50,13 +50,10 @@
             display: flex; justify-content: flex-start; align-items: center; gap: 12px;
             border-bottom: 1px solid rgba(0,0,0,0.05); z-index: 50;
             padding-top: env(safe-area-inset-top);
-            /* Thêm hiệu ứng bấm */
             cursor: pointer;
             transition: background-color 0.2s;
         }
-        .app-header:active {
-            background-color: #f9fafb;
-        }
+        .app-header:active { background-color: #f9fafb; }
 
         .logo-img { height: 40px; width: auto; object-fit: contain; border-radius: 50%; }
         .brand h1 { font-size: 1.1rem; font-weight: 800; color: var(--primary); margin: 0; line-height: 1.1; }
@@ -101,7 +98,7 @@
             background: white; border-radius: 12px; padding: 15px;
             display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center;
             text-decoration: none; color: var(--text-main);
-            box-shadow: 0 1px 3px rgba(0,0,0,0.03); transition: 0.2s;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.03); transition: 0.2s; cursor: pointer;
         }
         .menu-item:active { transform: scale(0.97); background: #fafafa; }
         .icon-box { width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; }
@@ -116,6 +113,7 @@
         .news-card {
             background: white; border-radius: 12px; padding: 15px; display: flex; gap: 12px;
             align-items: flex-start; box-shadow: 0 1px 2px rgba(0,0,0,0.03); margin-bottom: 12px; cursor: pointer;
+            text-decoration: none; color: inherit;
         }
         .news-icon { width: 40px; height: 40px; border-radius: 8px; background: #f3f4f6; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
         
@@ -175,26 +173,14 @@
 
         /* --- 5. MENU ĐÁY --- */
         .bottom-nav {
-            flex: 0 0 auto; 
-            width: 100%;
-            background: var(--white); 
-            border-top: 1px solid #e5e7eb;
-            display: flex; 
-            justify-content: space-around; 
-            align-items: center; 
-            z-index: 100;
-            min-height: var(--nav-height);
-            padding-bottom: env(safe-area-inset-bottom);
+            flex: 0 0 auto; width: 100%; background: var(--white); border-top: 1px solid #e5e7eb;
+            display: flex; justify-content: space-around; align-items: center; z-index: 100;
+            min-height: var(--nav-height); padding-bottom: env(safe-area-inset-bottom);
         }
-        
         .nav-btn {
-            background: none; border: none; 
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            gap: 4px;
-            color: #9ca3af; font-size: 0.7rem; font-weight: 600; 
-            width: 100%; 
-            height: var(--nav-height); 
-            cursor: pointer;
+            background: none; border: none; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            gap: 4px; color: #9ca3af; font-size: 0.7rem; font-weight: 600; 
+            width: 100%; height: var(--nav-height); cursor: pointer;
         }
         .nav-btn i { font-size: 1.4rem; margin-bottom: 2px; transition: 0.2s; }
         .nav-btn.active { color: var(--primary); }
@@ -207,7 +193,7 @@
 
     <div id="app-shell">
         
-        <!-- HEADER (Thêm sự kiện onclick để về trang chủ) -->
+        <!-- HEADER -->
         <header class="app-header" onclick="switchTab('view-home', document.querySelector('.nav-btn'))">
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQacJpSk9xLyd6NarFg3cNld5iDBAcUjuPtsgOXR9fj6A&s=10" alt="Logo HUPES" class="logo-img">
             <div class="brand">
@@ -231,30 +217,30 @@
 
                 <div class="section-title">Tiện ích nhanh</div>
                 <div class="grid-menu">
-                    <a href="https://congthongtin.hupes.edu.vn/" target="_blank" class="menu-item">
+                    <div onclick="openLink('https://congthongtin.hupes.edu.vn/')" class="menu-item">
                         <div class="icon-box ic-edu"><i class="fas fa-graduation-cap"></i></div>
                         <span>Tra cứu sinh viên</span>
-                    </a>
-                    <a href="https://hupes.edu.vn/" target="_blank" class="menu-item">
+                    </div>
+                    <div onclick="openLink('https://hupes.edu.vn/')" class="menu-item">
                         <div class="icon-box ic-web"><i class="fas fa-globe"></i></div>
                         <span>Trang Web Trường</span>
-                    </a>
-                    <a href="https://www.facebook.com/share/1GF7xsuzyV/?mibextid=wwXIfr" target="_blank" class="menu-item">
+                    </div>
+                    <div onclick="openLink('https://www.facebook.com/share/1GF7xsuzyV/?mibextid=wwXIfr')" class="menu-item">
                         <div class="icon-box ic-fb"><i class="fab fa-facebook-f"></i></div>
                         <span>Facebook Trường</span>
-                    </a>
-                    <a href="https://www.facebook.com/share/19vPkeHYrn/?mibextid=wwXIfr" target="_blank" class="menu-item">
+                    </div>
+                    <div onclick="openLink('https://www.facebook.com/share/19vPkeHYrn/?mibextid=wwXIfr')" class="menu-item">
                         <div class="icon-box ic-doan"><i class="fas fa-users"></i></div>
                         <span>Facebook Đoàn TN</span>
-                    </a>
-                    <a href="#" onclick="switchTab('view-schedule', document.getElementById('btn-schedule'))" class="menu-item">
+                    </div>
+                    <div onclick="switchTab('view-schedule', document.getElementById('btn-schedule'))" class="menu-item">
                         <div class="icon-box ic-contact"><i class="fas fa-calendar-alt"></i></div>
                         <span>Lịch tuần</span>
-                    </a>
-                     <a href="https://hupes.edu.vn/lien-he.html" target="_blank" class="menu-item">
+                    </div>
+                     <div onclick="openLink('https://hupes.edu.vn/lien-he.html')" class="menu-item">
                         <div class="icon-box ic-contact"><i class="fas fa-map-marked-alt"></i></div>
                         <span>Liên hệ</span>
-                    </a>
+                    </div>
                 </div>
 
                 <div class="section-title">Tin tức & Sự kiện</div>
@@ -266,13 +252,13 @@
                             <p style="font-size: 0.75rem; color: #6b7280;">Xem chi tiết lịch học tập, giảng dạy.</p>
                         </div>
                     </div>
-                    <a href="https://www.facebook.com/share/19vPkeHYrn/?mibextid=wwXIfr" target="_blank" class="news-card" style="text-decoration: none; color: inherit;">
+                    <div onclick="openLink('https://www.facebook.com/share/19vPkeHYrn/?mibextid=wwXIfr')" class="news-card">
                         <div class="news-icon"><i class="fab fa-facebook" style="color: #dc2626;"></i></div>
                         <div>
                             <h4 style="font-size: 0.9rem; font-weight: 700; margin-bottom: 4px;">Đoàn Thanh Niên</h4>
                             <p style="font-size: 0.75rem; color: #6b7280;">Cập nhật phong trào, tình nguyện.</p>
                         </div>
-                    </a>
+                    </div>
                 </div>
             </div>
 
@@ -319,7 +305,7 @@
             <div id="view-schedule" class="hidden" style="height: 100%;">
                 <div class="iframe-container">
                     <div class="iframe-header">
-                        Đang tải... | <a href="https://hupes.edu.vn/danh-muc-tin/lich-tuan.html" target="_blank" style="color: var(--primary); text-decoration: none;">Mở bằng trình duyệt</a>
+                        Đang tải... | <a href="#" onclick="openLink('https://hupes.edu.vn/danh-muc-tin/lich-tuan.html')" style="color: var(--primary); text-decoration: none;">Mở bằng trình duyệt</a>
                     </div>
                     <iframe src="https://hupes.edu.vn/danh-muc-tin/lich-tuan.html"></iframe>
                 </div>
@@ -344,6 +330,14 @@
 
     <!-- JS -->
     <script>
+        // Hàm mở link ngoài an toàn
+        function openLink(url) {
+            // Mở tab mới
+            const newWindow = window.open(url, '_blank', 'noopener,noreferrer');
+            // Nếu trình duyệt chặn popup, fallback về location (ít dùng nhưng an toàn)
+            if (newWindow) newWindow.opener = null;
+        }
+
         // Hàm quy đổi điểm 10 -> Chữ -> 4
         function convertGrade(score10) {
             if (score10 >= 9.0) return { t: 'A+', v: 4.0 };
