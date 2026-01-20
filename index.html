@@ -27,6 +27,7 @@
         body {
             font-family: 'Be Vietnam Pro', sans-serif;
             background-color: #e5e7eb;
+            color: var(--text-main);
             height: 100vh;
             height: 100dvh; 
             display: flex; justify-content: center;
@@ -94,11 +95,14 @@
         }
         
         .grid-menu { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 25px; }
+        
+        /* Chỉnh sửa class menu-item để hỗ trợ thẻ a */
         .menu-item {
             background: white; border-radius: 12px; padding: 15px;
             display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center;
             text-decoration: none; color: var(--text-main);
             box-shadow: 0 1px 3px rgba(0,0,0,0.03); transition: 0.2s; cursor: pointer;
+            border: none; outline: none; -webkit-appearance: none;
         }
         .menu-item:active { transform: scale(0.97); background: #fafafa; }
         .icon-box { width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; }
@@ -109,14 +113,14 @@
         .ic-fb { background: #eff6ff; color: #1877f2; }
         .ic-doan { background: #fee2e2; color: #dc2626; }
         .ic-contact { background: #f0fdf4; color: #16a34a; }
-        .ic-lib { background: #f3e8ff; color: #9333ea; } /* Màu tím cho thư viện */
+        .ic-lib { background: #f3e8ff; color: #9333ea; }
 
         .section-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 12px; color: #111827; }
         
         .news-card {
             background: white; border-radius: 12px; padding: 15px; display: flex; gap: 12px;
             align-items: flex-start; box-shadow: 0 1px 2px rgba(0,0,0,0.03); margin-bottom: 12px; cursor: pointer;
-            text-decoration: none; color: inherit;
+            text-decoration: none; color: var(--text-main); /* Fix màu cho thẻ a */
         }
         .news-icon { width: 40px; height: 40px; border-radius: 8px; background: #f3f4f6; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
         
@@ -201,7 +205,7 @@
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQacJpSk9xLyd6NarFg3cNld5iDBAcUjuPtsgOXR9fj6A&s=10" alt="Logo HUPES" class="logo-img">
             <div class="brand">
                 <h1>HUPES</h1>
-                <p>Cổng thông tin nhanh</p>
+                <p>Cổng thông tin sinh viên</p>
             </div>
         </header>
 
@@ -220,43 +224,43 @@
 
                 <div class="section-title">Tiện ích nhanh</div>
                 <div class="grid-menu">
-                    <!-- Mục 1 -->
-                    <div onclick="openLink('https://congthongtin.hupes.edu.vn/')" class="menu-item">
+                    <!-- SỬA LỖI: Dùng thẻ <a> thay vì div onclick -->
+                    
+                    <a href="https://congthongtin.hupes.edu.vn/" target="_blank" class="menu-item">
                         <div class="icon-box ic-edu"><i class="fas fa-graduation-cap"></i></div>
                         <span>Tra cứu sinh viên</span>
-                    </div>
-                    <!-- Mục 2 -->
-                    <div onclick="openLink('https://hupes.edu.vn/')" class="menu-item">
+                    </a>
+                    
+                    <a href="https://hupes.edu.vn/" target="_blank" class="menu-item">
                         <div class="icon-box ic-web"><i class="fas fa-globe"></i></div>
                         <span>Trang Web Trường</span>
-                    </div>
-                    <!-- Mục 3 -->
-                    <div onclick="openLink('https://www.facebook.com/share/1GF7xsuzyV/?mibextid=wwXIfr')" class="menu-item">
+                    </a>
+                    
+                    <a href="https://www.facebook.com/share/1GF7xsuzyV/?mibextid=wwXIfr" target="_blank" class="menu-item">
                         <div class="icon-box ic-fb"><i class="fab fa-facebook-f"></i></div>
                         <span>Facebook Trường</span>
-                    </div>
-                    <!-- Mục 4 -->
-                    <div onclick="openLink('https://www.facebook.com/share/19vPkeHYrn/?mibextid=wwXIfr')" class="menu-item">
+                    </a>
+                    
+                    <a href="https://www.facebook.com/share/19vPkeHYrn/?mibextid=wwXIfr" target="_blank" class="menu-item">
                         <div class="icon-box ic-doan"><i class="fas fa-users"></i></div>
                         <span>Facebook Đoàn TN</span>
-                    </div>
-                    
-                    <!-- MỤC MỚI: THƯ VIỆN SỐ -->
-                    <div onclick="openLink('https://opac.hupes.edu.vn/trang-chu')" class="menu-item">
+                    </a>
+
+                    <a href="https://opac.hupes.edu.vn/trang-chu" target="_blank" class="menu-item">
                         <div class="icon-box ic-lib"><i class="fas fa-book-reader"></i></div>
                         <span>Thư viện số</span>
-                    </div>
+                    </a>
 
-                    <!-- Mục 5 -->
+                    <!-- Mục nội bộ vẫn dùng div onclick -->
                     <div onclick="switchTab('view-schedule', document.getElementById('btn-schedule'))" class="menu-item">
                         <div class="icon-box ic-contact"><i class="fas fa-calendar-alt"></i></div>
                         <span>Lịch tuần</span>
                     </div>
-                    <!-- Mục 6 -->
-                     <div onclick="openLink('https://hupes.edu.vn/lien-he.html')" class="menu-item">
+
+                     <a href="https://hupes.edu.vn/lien-he.html" target="_blank" class="menu-item">
                         <div class="icon-box ic-contact"><i class="fas fa-map-marked-alt"></i></div>
                         <span>Liên hệ</span>
-                    </div>
+                    </a>
                 </div>
 
                 <div class="section-title">Tin tức & Sự kiện</div>
@@ -268,13 +272,15 @@
                             <p style="font-size: 0.75rem; color: #6b7280;">Xem chi tiết lịch học tập, giảng dạy.</p>
                         </div>
                     </div>
-                    <div onclick="openLink('https://www.facebook.com/share/19vPkeHYrn/?mibextid=wwXIfr')" class="news-card">
+                    
+                    <!-- SỬA LỖI: Dùng thẻ <a> cho tin tức Facebook -->
+                    <a href="https://www.facebook.com/share/19vPkeHYrn/?mibextid=wwXIfr" target="_blank" class="news-card">
                         <div class="news-icon"><i class="fab fa-facebook" style="color: #dc2626;"></i></div>
                         <div>
                             <h4 style="font-size: 0.9rem; font-weight: 700; margin-bottom: 4px;">Đoàn Thanh Niên</h4>
                             <p style="font-size: 0.75rem; color: #6b7280;">Cập nhật phong trào, tình nguyện.</p>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
 
@@ -321,7 +327,7 @@
             <div id="view-schedule" class="hidden" style="height: 100%;">
                 <div class="iframe-container">
                     <div class="iframe-header">
-                        Đang tải... | <a href="#" onclick="openLink('https://hupes.edu.vn/danh-muc-tin/lich-tuan.html')" style="color: var(--primary); text-decoration: none;">Mở bằng trình duyệt</a>
+                        Đang tải... | <a href="https://hupes.edu.vn/danh-muc-tin/lich-tuan.html" target="_blank" style="color: var(--primary); text-decoration: none;">Mở bằng trình duyệt</a>
                     </div>
                     <iframe src="https://hupes.edu.vn/danh-muc-tin/lich-tuan.html"></iframe>
                 </div>
@@ -346,14 +352,6 @@
 
     <!-- JS -->
     <script>
-        // Hàm mở link ngoài an toàn
-        function openLink(url) {
-            // Mở tab mới
-            const newWindow = window.open(url, '_blank', 'noopener,noreferrer');
-            // Nếu trình duyệt chặn popup, fallback về location (ít dùng nhưng an toàn)
-            if (newWindow) newWindow.opener = null;
-        }
-
         // Hàm quy đổi điểm 10 -> Chữ -> 4
         function convertGrade(score10) {
             if (score10 >= 9.0) return { t: 'A+', v: 4.0 };
