@@ -94,18 +94,45 @@
             background: rgba(255,255,255,0.1); border-radius: 50%;
         }
         
-        .grid-menu { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 25px; }
+        /* CẬP NHẬT GRID MENU ĐỂ CÁC Ô ĐỀU NHAU */
+        .grid-menu { 
+            display: grid; 
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 12px; 
+            margin-bottom: 25px; 
+        }
         
-        /* Chỉnh sửa class menu-item để hỗ trợ thẻ a */
         .menu-item {
             background: white; border-radius: 12px; padding: 15px;
-            display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center;
+            display: flex; flex-direction: column; align-items: center; justify-content: center; /* Căn giữa dọc */
+            gap: 8px; text-align: center;
             text-decoration: none; color: var(--text-main);
             box-shadow: 0 1px 3px rgba(0,0,0,0.03); transition: 0.2s; cursor: pointer;
             border: none; outline: none; -webkit-appearance: none;
+            
+            /* QUAN TRỌNG: Cố định chiều cao để tất cả ô đều bằng nhau */
+            height: 110px; 
+            width: 100%;
         }
         .menu-item:active { transform: scale(0.97); background: #fafafa; }
-        .icon-box { width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; }
+        
+        .menu-item span {
+            font-size: 0.9rem;
+            line-height: 1.3;
+            /* Giới hạn text 2 dòng nếu quá dài */
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .icon-box { 
+            width: 42px; height: 42px; 
+            border-radius: 10px; 
+            display: flex; align-items: center; justify-content: center; 
+            font-size: 1.25rem; 
+            margin-bottom: 2px;
+        }
         
         /* Màu sắc các icon */
         .ic-edu { background: #e0f2fe; color: #0284c7; }
@@ -120,7 +147,7 @@
         .news-card {
             background: white; border-radius: 12px; padding: 15px; display: flex; gap: 12px;
             align-items: flex-start; box-shadow: 0 1px 2px rgba(0,0,0,0.03); margin-bottom: 12px; cursor: pointer;
-            text-decoration: none; color: var(--text-main); /* Fix màu cho thẻ a */
+            text-decoration: none; color: var(--text-main);
         }
         .news-icon { width: 40px; height: 40px; border-radius: 8px; background: #f3f4f6; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
         
@@ -210,7 +237,7 @@
         </header>
 
         <div class="ticker-wrap">
-            <div class="ticker"><i class="fas fa-bullhorn"></i> Web được làm bởi sinh viên QPAN để tra cứu thông tin nhanh nhất từ nhà trường và học tập.</div>
+            <div class="ticker"><i class="fas fa-bullhorn"></i> Web được làm bởi sinh viên QPAN để tra cứu thông tin từ nhà trường và học tập.</div>
         </div>
 
         <div class="scroll-container">
@@ -224,40 +251,40 @@
 
                 <div class="section-title">Tiện ích nhanh</div>
                 <div class="grid-menu">
-                    <!-- SỬA LỖI: Dùng thẻ <a> thay vì div onclick -->
+                    <!-- Link Web/FB được ưu tiên dùng thẻ a và target _blank -->
                     
-                    <a href="https://congthongtin.hupes.edu.vn/" target="_blank" class="menu-item">
+                    <a href="https://congthongtin.hupes.edu.vn/" target="_blank" rel="noopener noreferrer" class="menu-item">
                         <div class="icon-box ic-edu"><i class="fas fa-graduation-cap"></i></div>
                         <span>Tra cứu sinh viên</span>
                     </a>
                     
-                    <a href="https://hupes.edu.vn/" target="_blank" class="menu-item">
+                    <a href="https://hupes.edu.vn/" target="_blank" rel="noopener noreferrer" class="menu-item">
                         <div class="icon-box ic-web"><i class="fas fa-globe"></i></div>
                         <span>Trang Web Trường</span>
                     </a>
                     
-                    <a href="https://www.facebook.com/share/1GY4iZh2q9/?mibextid=wwXIfr" target="_blank" class="menu-item">
+                    <a href="https://www.facebook.com/share/1GF7xsuzyV/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" class="menu-item">
                         <div class="icon-box ic-fb"><i class="fab fa-facebook-f"></i></div>
                         <span>Facebook Trường</span>
                     </a>
                     
-                    <a href="https://www.facebook.com/share/19vPkeHYrn/?mibextid=wwXIfr" target="_blank" class="menu-item">
+                    <a href="https://www.facebook.com/share/19vPkeHYrn/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" class="menu-item">
                         <div class="icon-box ic-doan"><i class="fas fa-users"></i></div>
                         <span>Facebook Đoàn TN</span>
                     </a>
 
-                    <a href="https://opac.hupes.edu.vn/trang-chu" target="_blank" class="menu-item">
+                    <a href="https://opac.hupes.edu.vn/trang-chu" target="_blank" rel="noopener noreferrer" class="menu-item">
                         <div class="icon-box ic-lib"><i class="fas fa-book-reader"></i></div>
                         <span>Thư viện số</span>
                     </a>
 
-                    <!-- Mục nội bộ vẫn dùng div onclick -->
+                    <!-- Các mục nội bộ -->
                     <div onclick="switchTab('view-schedule', document.getElementById('btn-schedule'))" class="menu-item">
                         <div class="icon-box ic-contact"><i class="fas fa-calendar-alt"></i></div>
                         <span>Lịch tuần</span>
                     </div>
 
-                     <a href="https://hupes.edu.vn/lien-he.html" target="_blank" class="menu-item">
+                     <a href="https://hupes.edu.vn/lien-he.html" target="_blank" rel="noopener noreferrer" class="menu-item">
                         <div class="icon-box ic-contact"><i class="fas fa-map-marked-alt"></i></div>
                         <span>Liên hệ</span>
                     </a>
@@ -269,12 +296,11 @@
                         <div class="news-icon"><i class="fas fa-calendar-week" style="color: var(--accent);"></i></div>
                         <div>
                             <h4 style="font-size: 0.9rem; font-weight: 700; margin-bottom: 4px;">Lịch công tác tuần</h4>
-                            <p style="font-size: 0.75rem; color: #6b7280;">Xem chi tiết lịch học tập, giảng dạy.</p>
+                            <p style="font-size: 0.75rem; color: #6b7280;">Xem chi tiết lịch nhà trường.</p>
                         </div>
                     </div>
                     
-                    <!-- SỬA LỖI: Dùng thẻ <a> cho tin tức Facebook -->
-                    <a href="https://www.facebook.com/share/19vPkeHYrn/?mibextid=wwXIfr" target="_blank" class="news-card">
+                    <a href="https://www.facebook.com/share/19vPkeHYrn/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" class="news-card">
                         <div class="news-icon"><i class="fab fa-facebook" style="color: #dc2626;"></i></div>
                         <div>
                             <h4 style="font-size: 0.9rem; font-weight: 700; margin-bottom: 4px;">Đoàn Thanh Niên</h4>
@@ -327,7 +353,7 @@
             <div id="view-schedule" class="hidden" style="height: 100%;">
                 <div class="iframe-container">
                     <div class="iframe-header">
-                        Đang tải... | <a href="https://hupes.edu.vn/danh-muc-tin/lich-tuan.html" target="_blank" style="color: var(--primary); text-decoration: none;">Mở bằng trình duyệt</a>
+                        Đang tải... | <a href="https://hupes.edu.vn/danh-muc-tin/lich-tuan.html" target="_blank" rel="noopener noreferrer" style="color: var(--primary); text-decoration: none;">Mở bằng trình duyệt</a>
                     </div>
                     <iframe src="https://hupes.edu.vn/danh-muc-tin/lich-tuan.html"></iframe>
                 </div>
