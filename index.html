@@ -102,11 +102,14 @@
         }
         .menu-item:active { transform: scale(0.97); background: #fafafa; }
         .icon-box { width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; }
+        
+        /* Màu sắc các icon */
         .ic-edu { background: #e0f2fe; color: #0284c7; }
         .ic-web { background: #fff7ed; color: #f59e0b; }
         .ic-fb { background: #eff6ff; color: #1877f2; }
         .ic-doan { background: #fee2e2; color: #dc2626; }
         .ic-contact { background: #f0fdf4; color: #16a34a; }
+        .ic-lib { background: #f3e8ff; color: #9333ea; } /* Màu tím cho thư viện */
 
         .section-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 12px; color: #111827; }
         
@@ -217,26 +220,39 @@
 
                 <div class="section-title">Tiện ích nhanh</div>
                 <div class="grid-menu">
+                    <!-- Mục 1 -->
                     <div onclick="openLink('https://congthongtin.hupes.edu.vn/')" class="menu-item">
                         <div class="icon-box ic-edu"><i class="fas fa-graduation-cap"></i></div>
                         <span>Tra cứu sinh viên</span>
                     </div>
+                    <!-- Mục 2 -->
                     <div onclick="openLink('https://hupes.edu.vn/')" class="menu-item">
                         <div class="icon-box ic-web"><i class="fas fa-globe"></i></div>
                         <span>Trang Web Trường</span>
                     </div>
+                    <!-- Mục 3 -->
                     <div onclick="openLink('https://www.facebook.com/share/1GF7xsuzyV/?mibextid=wwXIfr')" class="menu-item">
                         <div class="icon-box ic-fb"><i class="fab fa-facebook-f"></i></div>
                         <span>Facebook Trường</span>
                     </div>
+                    <!-- Mục 4 -->
                     <div onclick="openLink('https://www.facebook.com/share/19vPkeHYrn/?mibextid=wwXIfr')" class="menu-item">
                         <div class="icon-box ic-doan"><i class="fas fa-users"></i></div>
                         <span>Facebook Đoàn TN</span>
                     </div>
+                    
+                    <!-- MỤC MỚI: THƯ VIỆN SỐ -->
+                    <div onclick="openLink('https://opac.hupes.edu.vn/trang-chu')" class="menu-item">
+                        <div class="icon-box ic-lib"><i class="fas fa-book-reader"></i></div>
+                        <span>Thư viện số</span>
+                    </div>
+
+                    <!-- Mục 5 -->
                     <div onclick="switchTab('view-schedule', document.getElementById('btn-schedule'))" class="menu-item">
                         <div class="icon-box ic-contact"><i class="fas fa-calendar-alt"></i></div>
                         <span>Lịch tuần</span>
                     </div>
+                    <!-- Mục 6 -->
                      <div onclick="openLink('https://hupes.edu.vn/lien-he.html')" class="menu-item">
                         <div class="icon-box ic-contact"><i class="fas fa-map-marked-alt"></i></div>
                         <span>Liên hệ</span>
@@ -464,5 +480,4 @@
     </script>
 </body>
 </html>
-
 
